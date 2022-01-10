@@ -1,13 +1,11 @@
-var vien = {
-    name: "vien",
-    age: 20,
-    speak: function (text) {
-        console.log(text);
-    },
-    spend: function (amt) {
-        return amt;
-    }
-};
-console.log(vien);
-vien.speak("Tieng Viet");
-console.log("Chi tieu hang thang: ".concat(vien.spend(200)));
+"use strict";
+exports.__esModule = true;
+var CLassImplementInterFace_1 = require("./CLassImplementInterFace");
+var documentOne = new CLassImplementInterFace_1.Invoice("Vinamilk", "Drink Milk", 400000);
+var documentTwo = new CLassImplementInterFace_1.Payment("VinFast", "Create Car", 20000000);
+var allDocuments = [];
+allDocuments.push(documentOne);
+allDocuments.push(documentTwo);
+console.log(documentOne);
+console.log(documentTwo);
+console.log(allDocuments);
