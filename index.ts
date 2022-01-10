@@ -1,17 +1,22 @@
-//* ======= Function Signature =========== *//
+//*========= INTERFACE ========= *//
+interface Person {
+  name: string;
+  age: number;
+  speak(language: string): void;
+  spend(amount: number): number;
+}
 
-let greet: Function;
-greet = () => console.log("hello");
-
-let groot: (a: string, b: string) => void;
-
-groot = (name: string, age: string) =>
-  console.log(`${name} is ${age} years old`);
-groot("groot", "9999");
-
-type Student = { name: string; age: number };
-let printStdu: (student: Student) => void;
-printStdu = (student: Student) => {
-  console.log(`${student.name} - ${student.age}`);
+const vien: Person = {
+  name: "vien",
+  age: 20,
+  speak(text: string): void {
+    console.log(text);
+  },
+  spend(amt: number): number {
+    return amt;
+  },
 };
-printStdu({ name: "Vien", age: 30 });
+
+console.log(vien);
+vien.speak("Tieng Viet");
+console.log(`Chi tieu hang thang: ${vien.spend(200)}`);

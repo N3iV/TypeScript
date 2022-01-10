@@ -1,13 +1,13 @@
-//* ======= Function Signature =========== *//
-var greet;
-greet = function () { return console.log("hello"); };
-var groot;
-groot = function (name, age) {
-    return console.log("".concat(name, " is ").concat(age, " years old"));
+var vien = {
+    name: "vien",
+    age: 20,
+    speak: function (text) {
+        console.log(text);
+    },
+    spend: function (amt) {
+        return amt;
+    }
 };
-groot("groot", "9999");
-var printStdu;
-printStdu = function (student) {
-    console.log("".concat(student.name, " - ").concat(student.age));
-};
-printStdu({ name: "Vien", age: 30 });
+console.log(vien);
+vien.speak("Tieng Viet");
+console.log("Chi tieu hang thang: ".concat(vien.spend(200)));
