@@ -1,7 +1,10 @@
 import { Box, Button, Chip, TextField } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useState, ChangeEvent, useContext } from "react";
+import { PropTypes } from "@material-ui/core";
+
 import { MoviesContext } from "../contexts/MoviesContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     movieInput: {
@@ -10,11 +13,13 @@ const useStyles = makeStyles((theme: Theme) =>
     movieChip: {
       padding: "30px 10px",
       fontSize: "20px",
-      marginLeft: "10px",
+      margin: "10px",
     },
   })
 );
 const Movies = () => {
+  const { theme } = useContext(ThemeContext);
+  const chipTheme = theme as Exclude<PropTypes.Color, "inherit">;
   const classes = useStyles();
   const [movie, setMovie] = useState("");
   console.log(movie);
@@ -37,7 +42,7 @@ const Movies = () => {
         />
         <Button
           variant="contained"
-          color="primary"
+          color={theme}
           onClick={() => {
             addMovie(movie);
             setMovie("");
@@ -46,15 +51,21 @@ const Movies = () => {
           Add
         </Button>
       </Box>
-      <Box display="flex" justifyContent="center" flexWrap="wrap" mx={5}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        flexWrap="wrap"
+        mx={5}
+        color={theme}
+      >
         {movies.map((movie) => (
           <Chip
             key={movie.id}
             label={movie.title}
             clickable
-            color="primary"
             className={classes.movieChip}
             onDelete={() => deleteMovie(movie.id)}
+            color={chipTheme}
           ></Chip>
         ))}
       </Box>

@@ -84,6 +84,7 @@ function Navbar() {
           <Box textAlign="center">
             <Box my={1}>
               <Typography variant="h6">Time: {time.toUTCString()}</Typography>
+              <Button variant="contained">Login</Button>
             </Box>
           </Box>
         </Box>

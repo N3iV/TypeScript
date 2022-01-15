@@ -26,14 +26,17 @@ const MoviesContextProvide = ({ children }: MoviesContextProps) => {
   const [movies, setMovies] = useState<Movie[]>(
     MoviesContextDefaultData.movies
   );
-  const addMovie = (title: string) =>
-    setMovies([
-      ...movies,
-      {
-        id: uuidv4(),
-        title,
-      },
-    ]);
+  const addMovie = (title: string) => {
+    if (title !== "") {
+      setMovies([
+        ...movies,
+        {
+          id: uuidv4(),
+          title,
+        },
+      ]);
+    }
+  };
   const deleteMovie = (id: string) =>
     setMovies(movies.filter((movie) => movie.id !== id));
   const movieContextData = { movies, addMovie, deleteMovie };
