@@ -1,11 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { IParams } from "./types/index.d";
+import { IParams } from "types/index.d";
 
 const generatePage = (name: string) => {
-  const customName = name.split("")[0].toUpperCase() + name.slice(1);
-  console.log(customName);
-  const page = () => require(`./Pages/${customName}`).default;
+  const page = () => require(`./Pages/${name}`).default;
 
   try {
     return React.createElement(page());
@@ -16,10 +14,13 @@ const generatePage = (name: string) => {
 
 const PageRender = () => {
   const { page, id }: IParams = useParams();
+
   let name = "";
   if (page) {
     name = id ? `${page}/[id]` : `${page}`;
   }
+
+  console.log(name);
   return generatePage(name);
 };
 

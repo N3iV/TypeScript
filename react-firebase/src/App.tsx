@@ -1,11 +1,21 @@
-import React from "react";
+import Header from "components/Header";
+import { useAppDispatch, useAppSelector } from "hooks/useDispatchSelector";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import PageRender from "./PageRender";
+import { addUser } from "redux/slice/AuthSlice";
 import "./App.css";
+import PageRender from "./PageRender";
 const App = () => {
+  const { currentUser, loading } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(addUser({ name: "Vien Hoang" }));
+  }, [dispatch]);
+  console.log({ currentUser, loading });
   return (
     <BrowserRouter>
-      <h1 className="text-green-500">Hello</h1>
+      <Header />
+
       <Switch>
         <Route path="/" component={PageRender} exact />
         <Route path="/:page" component={PageRender} exact />
