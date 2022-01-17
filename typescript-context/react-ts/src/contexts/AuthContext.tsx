@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useReducer } from "react";
-import { authReducer, AuthSlice } from "../Reducers/AuthReducers";
+import { authReducer, AuthState } from "../Reducers/AuthReducers";
 import { AuthActionType } from "../Reducers/types";
 
 const { TOGGLE_AUTH } = AuthActionType;
@@ -12,7 +12,7 @@ const AuthDefault = {
   username: "",
 };
 interface AuthContextDefault {
-  authInfo: AuthSlice;
+  authInfo: AuthState;
   toggleAuth: (username: string) => void;
 }
 export const AuthContext = createContext<AuthContextDefault>({

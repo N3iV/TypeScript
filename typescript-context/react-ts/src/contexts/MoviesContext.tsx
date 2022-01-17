@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 interface MoviesContextProps {
   children: ReactNode;
 }
-interface Movie {
+export interface Movie {
   id: string;
   title: string;
 }
