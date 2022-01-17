@@ -49,7 +49,7 @@ function Navbar() {
   ) => {
     setPosition(e.target.value as string);
   };
-
+  console.log(isAuthenticated);
   return (
     <AppBar position="static" color={theme}>
       <Toolbar>

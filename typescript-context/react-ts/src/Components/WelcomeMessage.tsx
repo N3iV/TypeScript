@@ -11,11 +11,13 @@ const WelcomeMessage = ({
   country = "Viet Nam",
 }: WelcomeMsgProps) => {
   const {
-    authInfo: { username },
+    authInfo: { username, isAuthenticated },
   } = useContext(AuthContext);
   return (
     <Box mb={1}>
-      Welcome {username} - {position} from {country}
+      {isAuthenticated
+        ? ` Welcome ${username} - ${position} from ${country}`
+        : ""}
     </Box>
   );
 };
