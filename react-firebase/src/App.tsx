@@ -1,19 +1,32 @@
 import Header from "components/Header";
-import { useAppDispatch, useAppSelector } from "hooks/useDispatchSelector";
+import {
+  onAuthStateChanged,
+  sendEmailVerification,
+  signOut,
+} from "firebase/auth";
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { addUser } from "redux/slice/AuthSlice";
+import { Route, Switch, useHistory } from "react-router-dom";
 import "./App.css";
+import { auth } from "./Firebase";
 import PageRender from "./PageRender";
 const App = () => {
-  const { currentUser, loading } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
+  const history = useHistory();
   useEffect(() => {
-    dispatch(addUser({ name: "Vien Hoang" }));
-  }, [dispatch]);
-  console.log({ currentUser, loading });
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log(user);
+      if (user) {
+        if (!user.emailVerified) {
+          await signOut(auth);
+          await sendEmailVerification(user);
+          return history.push("/email_verified");
+        }
+        console.log(user);
+      }
+    });
+    return unsubscribe;
+  }, []);
   return (
-    <BrowserRouter>
+    <>
       <Header />
 
       <Switch>
@@ -21,7 +34,7 @@ const App = () => {
         <Route path="/:page" component={PageRender} exact />
         <Route path="/:page/:id" component={PageRender} exact />
       </Switch>
-    </BrowserRouter>
+    </>
   );
 };
 
