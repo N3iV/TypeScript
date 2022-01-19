@@ -2,10 +2,18 @@ import LoginForm from "components/auth/LoginForm";
 import LoginSocial from "components/auth/LoginSocial";
 import Loading from "components/global/Loading";
 import { useAppSelector } from "hooks/useDispatchSelector";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 const Login = () => {
   const { loading } = useAppSelector((state) => state.auth);
+  const history = useHistory();
+  const { currentUser } = useAppSelector((state) => state.auth);
+  useEffect(() => {
+    if (currentUser) {
+      return history.replace("/");
+    }
+  }, [history, currentUser]);
   return (
     <div className="flex my-2 justify-center items-center min-h-[calc(100vh-6rem)]">
       <div className="container max-w-md p-5 shadow-sm border-solid border-2">

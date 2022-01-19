@@ -4,9 +4,11 @@ import {
   browserLocalPersistence,
   browserSessionPersistence,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   setPersistence,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -55,6 +57,21 @@ export const facebookApi = async () => {
   try {
     const res = await signInWithPopup(auth, providerFacebook);
     return res.user;
+  } catch (err: any) {
+    return toast.error(err.message);
+  }
+};
+export const forgotPassApi = async (email: string) => {
+  try {
+    const res = await sendPasswordResetEmail(auth, email);
+    return toast.success("Success! Check your email");
+  } catch (err: any) {
+    return toast.error(err.message);
+  }
+};
+export const signOutApi = async () => {
+  try {
+    await signOut(auth);
   } catch (err: any) {
     return toast.error(err.message);
   }

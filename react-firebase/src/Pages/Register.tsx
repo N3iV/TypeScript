@@ -1,10 +1,17 @@
 import RegisterForm from "components/auth/RegisterForm";
 import Loading from "components/global/Loading";
 import { useAppSelector } from "hooks/useDispatchSelector";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 const Register = () => {
-  const { loading } = useAppSelector((state) => state.auth);
+  const { loading, currentUser } = useAppSelector((state) => state.auth);
+  const history = useHistory();
+  useEffect(() => {
+    if (currentUser) {
+      return history.replace("/");
+    }
+  }, [history, currentUser]);
   return (
     <div className="flex my-2 justify-center items-center min-h-[calc(100vh-6rem)]">
       <div className="container max-w-md p-5 shadow-sm border-solid border-2">

@@ -1,4 +1,4 @@
-import Header from "components/Header";
+import Header from "components/Header/Header";
 import {
   onAuthStateChanged,
   sendEmailVerification,
@@ -27,19 +27,23 @@ const App = () => {
           return history.push("/email_verified");
         }
         dispatch(addUser(user));
+      } else {
+        dispatch(addUser(undefined));
+        return history.push("/login");
       }
     });
     return unsubscribe;
-  }, [history]);
+  }, [history, dispatch]);
   return (
     <>
       <Header />
-
-      <Switch>
-        <Route path="/" component={PageRender} exact />
-        <Route path="/:page" component={PageRender} exact />
-        <Route path="/:page/:id" component={PageRender} exact />
-      </Switch>
+      <main className="container p-4 mx-auto max-w-7xl">
+        <Switch>
+          <Route path="/" component={PageRender} exact />
+          <Route path="/:page" component={PageRender} exact />
+          <Route path="/:page/:id" component={PageRender} exact />
+        </Switch>
+      </main>
     </>
   );
 };

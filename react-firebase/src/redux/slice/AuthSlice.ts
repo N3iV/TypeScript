@@ -1,8 +1,14 @@
-import { facebookApi, googleApi, loginApi } from "./../actions/authActions";
-import { ILogin } from "./../../types/index.d";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { registerApi } from "redux/actions/authActions";
 import { IRegister } from "types/index.d";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { ILogin } from "./../../types/index.d";
+import {
+  facebookApi,
+  forgotPassApi,
+  googleApi,
+  loginApi,
+  signOutApi,
+} from "./../actions/authActions";
 export const authRegister = createAsyncThunk(
   "auth/register",
   async (user: IRegister) => {
@@ -27,6 +33,15 @@ export const authFacebookLogin = createAsyncThunk(
     return await facebookApi();
   }
 );
+export const authResetPass = createAsyncThunk(
+  "auth/forgot_password",
+  async (email: string) => {
+    return await forgotPassApi(email);
+  }
+);
+export const authLogout = createAsyncThunk("auth/logout", async () => {
+  return await signOutApi();
+});
 export interface AuthState {
   currentUser?: any;
   loading: boolean;
@@ -75,6 +90,19 @@ const AuthSlice = createSlice({
         state.loading = true;
       })
       .addCase(authFacebookLogin.fulfilled, (state) => {
+        state.loading = false;
+      })
+      //*Reset pass
+      .addCase(authResetPass.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(authResetPass.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(authLogout.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(authLogout.fulfilled, (state) => {
         state.loading = false;
       });
   },
