@@ -4,27 +4,33 @@ import {
   sendEmailVerification,
   signOut,
 } from "firebase/auth";
+import { useAppDispatch } from "hooks/useDispatchSelector";
 import React, { useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
+import { addUser } from "redux/slice/AuthSlice";
 import "./App.css";
 import { auth } from "./Firebase";
 import PageRender from "./PageRender";
 const App = () => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log(user);
       if (user) {
-        if (!user.emailVerified) {
+        const providerID = user.providerData.some(
+          (p) => p.providerId === "password"
+        );
+
+        if (providerID && !user.emailVerified) {
           await signOut(auth);
           await sendEmailVerification(user);
           return history.push("/email_verified");
         }
-        console.log(user);
+        dispatch(addUser(user));
       }
     });
     return unsubscribe;
-  }, []);
+  }, [history]);
   return (
     <>
       <Header />
